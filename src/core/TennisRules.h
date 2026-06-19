@@ -33,4 +33,4 @@ private:
 	int setsToWin() const;
 };
 
-}
+} // namespace tennis_scoreboard

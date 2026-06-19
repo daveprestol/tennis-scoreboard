@@ -29,7 +29,7 @@ bool isTiebreak(const MatchState &state)
 	return set.teamA == state.format.tiebreakAt && set.teamB == state.format.tiebreakAt;
 }
 
-}
+} // namespace
 
 TennisRules::TennisRules(MatchState state) : state_(std::move(state)) {}
 
@@ -180,7 +180,8 @@ int TennisRules::setsWonBy(TeamId team) const
 		const int other = gamesFor(set, otherTeam(team));
 		if (own >= state_.format.gamesPerSet && own >= other + state_.format.winByGames)
 			++won;
-		else if (state_.format.tiebreakAt > 0 && own == state_.format.tiebreakAt + 1 && other == state_.format.tiebreakAt)
+		else if (state_.format.tiebreakAt > 0 && own == state_.format.tiebreakAt + 1 &&
+			 other == state_.format.tiebreakAt)
 			++won;
 	}
 	return won;
@@ -191,4 +192,4 @@ int TennisRules::setsToWin() const
 	return (std::max(1, state_.format.bestOfSets) / 2) + 1;
 }
 
-}
+} // namespace tennis_scoreboard

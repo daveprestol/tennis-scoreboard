@@ -37,4 +37,4 @@ private:
 	void refreshPreview();
 };
 
-}
+} // namespace tennis_scoreboard

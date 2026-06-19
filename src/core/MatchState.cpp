@@ -81,7 +81,8 @@ int setsWonBy(const MatchState &state, TeamId team)
 		const int other = scoreFor(set, otherTeam(team));
 		if (own >= state.format.gamesPerSet && own >= other + state.format.winByGames)
 			++won;
-		if (state.format.tiebreakAt > 0 && own == state.format.tiebreakAt + 1 && other == state.format.tiebreakAt)
+		if (state.format.tiebreakAt > 0 && own == state.format.tiebreakAt + 1 &&
+		    other == state.format.tiebreakAt)
 			++won;
 	}
 	return won;
@@ -113,8 +114,8 @@ std::string primaryScoreTerm(const MatchState &state)
 	const int a = state.currentGame.teamAPoints;
 	const int b = state.currentGame.teamBPoints;
 	const bool tiebreak = isTiebreak(state);
-	const bool goldenPoint =
-		!tiebreak && state.format.gameScoringMode == GameScoringMode::GoldenPoint && a == 3 && b == 3;
+	const bool goldenPoint = !tiebreak && state.format.gameScoringMode == GameScoringMode::GoldenPoint && a == 3 &&
+				 b == 3;
 	bool hasAdvantage = false;
 	bool hasDeuce = !goldenPoint && !tiebreak && a == b && a >= 3;
 	bool hasTiebreak = tiebreak;
@@ -210,7 +211,7 @@ void appendTeamJson(std::ostringstream &out, const Team &team)
 	out << "]}";
 }
 
-}
+} // namespace
 
 std::string teamIdToString(TeamId team)
 {
@@ -296,9 +297,10 @@ std::string matchStateToJson(const MatchState &state)
 		out << "\"winnerTeam\":\"" << teamIdToString(*state.winnerTeam) << "\",";
 	out << "\"eventName\":\"" << escapeJson(state.eventName) << "\",";
 	out << "\"eventLogoPath\":\"" << escapeJson(state.eventLogoPath) << "\",";
-	out << "\"format\":{\"bestOfSets\":" << state.format.bestOfSets << ",\"gamesPerSet\":" << state.format.gamesPerSet
-	    << ",\"winByGames\":" << state.format.winByGames << ",\"tiebreakAt\":" << state.format.tiebreakAt
-	    << ",\"gameScoringMode\":\"" << gameScoringModeToString(state.format.gameScoringMode) << "\"},";
+	out << "\"format\":{\"bestOfSets\":" << state.format.bestOfSets
+	    << ",\"gamesPerSet\":" << state.format.gamesPerSet << ",\"winByGames\":" << state.format.winByGames
+	    << ",\"tiebreakAt\":" << state.format.tiebreakAt << ",\"gameScoringMode\":\""
+	    << gameScoringModeToString(state.format.gameScoringMode) << "\"},";
 	out << "\"teamA\":";
 	appendTeamJson(out, state.teamA);
 	out << ",\"teamB\":";
@@ -309,8 +311,8 @@ std::string matchStateToJson(const MatchState &state)
 			out << ",";
 		out << "{\"teamA\":" << state.sets[i].teamA << ",\"teamB\":" << state.sets[i].teamB << "}";
 	}
-	out << "],\"setsWon\":{\"teamA\":" << setsWonBy(state, TeamId::TeamA) << ",\"teamB\":"
-	    << setsWonBy(state, TeamId::TeamB) << "},\"currentGame\":{\"teamA\":\""
+	out << "],\"setsWon\":{\"teamA\":" << setsWonBy(state, TeamId::TeamA)
+	    << ",\"teamB\":" << setsWonBy(state, TeamId::TeamB) << "},\"currentGame\":{\"teamA\":\""
 	    << (isTiebreak(state) ? tiebreakLabelFor(state.currentGame, TeamId::TeamA)
 				  : pointLabelFor(state.currentGame, TeamId::TeamA))
 	    << "\",\"teamB\":\""
@@ -334,4 +336,4 @@ std::string matchStateToJson(const MatchState &state)
 	return out.str();
 }
 
-}
+} // namespace tennis_scoreboard

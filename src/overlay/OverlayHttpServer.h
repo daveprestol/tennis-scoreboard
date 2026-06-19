@@ -41,4 +41,4 @@ private:
 	void sendFile(QTcpSocket *socket, const QString &relativePath, QByteArray contentType);
 };
 
-}
+} // namespace tennis_scoreboard

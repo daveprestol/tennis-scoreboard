@@ -87,10 +87,11 @@ void setTeamPlayers(Team &team, const QString &player1, const QString &player2, 
 	team.displayName = displayNames.join("/").toStdString();
 }
 
-}
+} // namespace
 
 ScoreboardDock::ScoreboardDock(QString resourcePath, QWidget *parent)
-	: QWidget(parent), overlayServer_(std::move(resourcePath), this)
+	: QWidget(parent),
+	  overlayServer_(std::move(resourcePath), this)
 {
 	overlayServer_.setActionHandler([this](const QString &action, const QMap<QString, QString> &params) {
 		handleRemoteAction(action, params);
@@ -158,7 +159,7 @@ void ScoreboardDock::handleRemoteAction(const QString &action, const QMap<QStrin
 	if (action == "setSetup") {
 		auto state = rules_.state();
 		const auto competitionType = params.value("competitionType") == "doubles" ? CompetitionType::Doubles
-											   : CompetitionType::Singles;
+											  : CompetitionType::Singles;
 		state.eventName = params.value("eventName").toStdString();
 		state.eventLogoPath = params.value("eventLogoPath").toStdString();
 		state.competitionType = competitionType;
@@ -168,23 +169,34 @@ void ScoreboardDock::handleRemoteAction(const QString &action, const QMap<QStrin
 		state.format.gamesPerSet = boundedInt(params, "gamesPerSet", state.format.gamesPerSet, 1, 99);
 		state.format.winByGames = boundedInt(params, "winByGames", state.format.winByGames, 1, 9);
 		state.format.tiebreakAt = boundedInt(params, "tiebreakAt", state.format.tiebreakAt, 0, 99);
-		state.format.gameScoringMode = params.value("gameScoringMode") == "golden_point" ? GameScoringMode::GoldenPoint
-											  : GameScoringMode::Advantage;
-		setTeamPlayers(state.teamA, params.value("teamAPlayer1"), params.value("teamAPlayer2"), competitionType, "Player 1");
-		setTeamPlayers(state.teamB, params.value("teamBPlayer1"), params.value("teamBPlayer2"), competitionType, "Player 2");
-		state.theme.primaryColor = params.value("primaryColor", QString::fromStdString(state.theme.primaryColor)).toStdString();
+		state.format.gameScoringMode = params.value("gameScoringMode") == "golden_point"
+						       ? GameScoringMode::GoldenPoint
+						       : GameScoringMode::Advantage;
+		setTeamPlayers(state.teamA, params.value("teamAPlayer1"), params.value("teamAPlayer2"), competitionType,
+			       "Player 1");
+		setTeamPlayers(state.teamB, params.value("teamBPlayer1"), params.value("teamBPlayer2"), competitionType,
+			       "Player 2");
+		state.theme.primaryColor =
+			params.value("primaryColor", QString::fromStdString(state.theme.primaryColor)).toStdString();
 		state.theme.secondaryColor =
 			params.value("secondaryColor", QString::fromStdString(state.theme.secondaryColor)).toStdString();
-		state.theme.accentColor = params.value("accentColor", QString::fromStdString(state.theme.accentColor)).toStdString();
+		state.theme.accentColor =
+			params.value("accentColor", QString::fromStdString(state.theme.accentColor)).toStdString();
 		state.theme.eventTitleColor =
-			params.value("eventTitleColor", QString::fromStdString(state.theme.eventTitleColor)).toStdString();
+			params.value("eventTitleColor", QString::fromStdString(state.theme.eventTitleColor))
+				.toStdString();
 		state.theme.eventLogoTintColor =
 			params.value("eventLogoTintEnabled") == "true"
-				? params.value("eventLogoTintColor", QString::fromStdString(state.theme.eventLogoTintColor)).toStdString()
+				? params.value("eventLogoTintColor",
+					       QString::fromStdString(state.theme.eventLogoTintColor))
+					  .toStdString()
 				: std::string{};
-		state.theme.textColor = params.value("textColor", QString::fromStdString(state.theme.textColor)).toStdString();
-		state.theme.teamAColor = params.value("teamAColor", QString::fromStdString(state.theme.teamAColor)).toStdString();
-		state.theme.teamBColor = params.value("teamBColor", QString::fromStdString(state.theme.teamBColor)).toStdString();
+		state.theme.textColor =
+			params.value("textColor", QString::fromStdString(state.theme.textColor)).toStdString();
+		state.theme.teamAColor =
+			params.value("teamAColor", QString::fromStdString(state.theme.teamAColor)).toStdString();
+		state.theme.teamBColor =
+			params.value("teamBColor", QString::fromStdString(state.theme.teamBColor)).toStdString();
 		state.theme.backgroundOpacity =
 			boundedDouble(params, "backgroundOpacity", state.theme.backgroundOpacity, 0.2, 1.0);
 		rules_.setState(state);
@@ -267,10 +279,11 @@ void ScoreboardDock::refreshServerInfo()
 	QString networkText;
 	for (const auto &address : QNetworkInterface::allAddresses()) {
 		if (address.protocol() == QAbstractSocket::IPv4Protocol && !address.isLoopback()) {
-			networkText += QString("Config/control: http://%1:%2/config\nBrowser Source URL: http://%1:%3/score\n")
-					       .arg(address.toString())
-					       .arg(overlayServer_.configPort())
-					       .arg(overlayServer_.scorePort());
+			networkText +=
+				QString("Config/control: http://%1:%2/config\nBrowser Source URL: http://%1:%3/score\n")
+					.arg(address.toString())
+					.arg(overlayServer_.configPort())
+					.arg(overlayServer_.scorePort());
 		}
 	}
 
@@ -278,8 +291,9 @@ void ScoreboardDock::refreshServerInfo()
 		networkText = "No LAN IP detected. Connect the Mac to Wi-Fi/Ethernet to control from another device.";
 
 	serverStatus_->setText("Running");
-	localInfo_->setText(QString("Config/control: %1\nBrowser Source URL: %2\nCreate a Browser Source in OBS and use the Browser Source URL.")
-				    .arg(overlayServer_.configUrl(), overlayServer_.scoreUrl()));
+	localInfo_->setText(
+		QString("Config/control: %1\nBrowser Source URL: %2\nCreate a Browser Source in OBS and use the Browser Source URL.")
+			.arg(overlayServer_.configUrl(), overlayServer_.scoreUrl()));
 	networkInfo_->setText(networkText.trimmed());
 	serverToggle_->setText("Stop Server");
 }
@@ -289,4 +303,4 @@ void ScoreboardDock::refreshPreview()
 	overlayServer_.setStateJson(QByteArray::fromStdString(matchStateToJson(rules_.state())));
 }
 
-}
+} // namespace tennis_scoreboard

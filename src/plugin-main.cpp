@@ -15,7 +15,7 @@ namespace {
 constexpr const char *DockId = "tennis-scoreboard-control-dock";
 tennis_scoreboard::ScoreboardDock *scoreboardDock = nullptr;
 
-}
+} // namespace
 
 bool obs_module_load(void)
 {

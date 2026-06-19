@@ -90,4 +90,4 @@ std::string matchStatusToString(MatchStatus status);
 std::string pointLabelFor(const GameScore &game, TeamId team);
 std::string matchStateToJson(const MatchState &state);
 
-}
+} // namespace tennis_scoreboard

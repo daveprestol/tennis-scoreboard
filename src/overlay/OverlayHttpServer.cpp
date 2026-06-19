@@ -16,10 +16,11 @@ QByteArray reasonPhrase(int statusCode)
 	return statusCode == 200 ? "OK" : "Not Found";
 }
 
-}
+} // namespace
 
 OverlayHttpServer::OverlayHttpServer(QString resourcePath, QObject *parent)
-	: QObject(parent), resourcePath_(std::move(resourcePath))
+	: QObject(parent),
+	  resourcePath_(std::move(resourcePath))
 {
 	connect(&scoreServer_, &QTcpServer::newConnection, this, [this] { handleConnection(&scoreServer_); });
 	connect(&configServer_, &QTcpServer::newConnection, this, [this] { handleConnection(&configServer_); });
@@ -90,9 +91,8 @@ void OverlayHttpServer::handleConnection(QTcpServer *server)
 {
 	while (auto *socket = server->nextPendingConnection()) {
 		const bool isConfigServer = server == &configServer_;
-		connect(socket, &QTcpSocket::readyRead, this, [this, socket, isConfigServer] {
-			handleRequest(socket, isConfigServer);
-		});
+		connect(socket, &QTcpSocket::readyRead, this,
+			[this, socket, isConfigServer] { handleRequest(socket, isConfigServer); });
 		connect(socket, &QTcpSocket::disconnected, socket, &QTcpSocket::deleteLater);
 	}
 }
@@ -178,4 +178,4 @@ void OverlayHttpServer::sendFile(QTcpSocket *socket, const QString &relativePath
 	sendResponse(socket, 200, std::move(contentType), file.readAll());
 }
 
-}
+} // namespace tennis_scoreboard
