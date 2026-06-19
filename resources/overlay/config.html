@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tennis Scoreboard Control</title>
+    <link rel="stylesheet" href="./config.css">
+  </head>
+  <body>
+    <main>
+      <section class="setup">
+        <input id="eventName" placeholder="Your Event Name">
+        <select id="competitionType">
+          <option value="singles">Singles</option>
+          <option value="doubles">Doubles</option>
+        </select>
+        <input id="eventLogoPath" placeholder="Event logo URL">
+        <div class="format">
+          <label>Best of sets <input id="bestOfSets" type="number" min="1" step="2"></label>
+          <label>Games per set <input id="gamesPerSet" type="number" min="1"></label>
+          <label>Win by games <input id="winByGames" type="number" min="1"></label>
+          <label>Tiebreak at <input id="tiebreakAt" type="number" min="0"></label>
+          <label class="wide-field">Game scoring
+            <select id="gameScoringMode">
+              <option value="advantage">Traditional advantage</option>
+              <option value="golden_point">Golden point</option>
+            </select>
+          </label>
+        </div>
+        <div class="players">
+          <input id="teamAPlayer1" class="team-field team-a-field" placeholder="Team A player">
+          <input id="teamBPlayer1" class="team-field team-b-field" placeholder="Team B player">
+          <input id="teamAPlayer2" class="team-field team-a-field doubles-only" placeholder="Team A second player">
+          <input id="teamBPlayer2" class="team-field team-b-field doubles-only" placeholder="Team B second player">
+        </div>
+        <div class="colors">
+          <label>Board <input id="primaryColor" type="color"></label>
+          <label>Row <input id="secondaryColor" type="color"></label>
+          <label>Accent <input id="accentColor" type="color"></label>
+          <label>Event title <input id="eventTitleColor" type="color"></label>
+          <label>Logo tint <span class="tint-control"><input id="eventLogoTintEnabled" type="checkbox"><input id="eventLogoTintColor" type="color"></span></label>
+          <label>Text <input id="textColor" type="color"></label>
+          <label>Team A <input id="teamAColor" type="color"></label>
+          <label>Team B <input id="teamBColor" type="color"></label>
+        </div>
+        <label class="opacity-control">
+          <span>Scoreboard opacity <strong id="backgroundOpacityValue">85%</strong></span>
+          <input id="backgroundOpacity" type="range" min="0.2" max="1" step="0.05">
+        </label>
+        <button data-action="setSetup">Save Setup</button>
+      </section>
+
+      <section class="score">
+        <article>
+          <span id="teamALabel">Team A</span>
+          <strong id="teamAScore">0</strong>
+          <button data-action="pointA">+ Point</button>
+          <button data-action="serverA">Serve</button>
+        </article>
+        <article>
+          <span id="teamBLabel">Team B</span>
+          <strong id="teamBScore">0</strong>
+          <button data-action="pointB">+ Point</button>
+          <button data-action="serverB">Serve</button>
+        </article>
+      </section>
+
+      <section class="actions">
+        <button data-action="start">Start</button>
+        <button data-action="undo">Undo</button>
+        <button data-action="resetGame">Reset Game</button>
+        <button data-action="resetSet">Reset Set</button>
+        <button data-action="resetMatch">Reset Match</button>
+        <button data-action="finish">Finish</button>
+        <button data-action="suspended">Suspended</button>
+        <button data-action="interrupted">Interrupted</button>
+        <button data-action="delayed">Delayed</button>
+        <button data-action="retired">RET</button>
+        <button data-action="walkover">WO</button>
+        <div class="custom-notice">
+          <input id="customNotice" placeholder="Custom message">
+          <button data-action="customNotice">Custom</button>
+        </div>
+      </section>
+    </main>
+    <script src="./config.js"></script>
+  </body>
+</html>

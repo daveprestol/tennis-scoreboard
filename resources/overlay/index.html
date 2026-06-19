@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tennis Scoreboard Overlay</title>
+    <link rel="stylesheet" href="./scoreboard.css">
+  </head>
+  <body>
+    <main class="scoreboard" data-serving="teamA">
+      <section class="event">
+        <span class="event-logo" hidden></span>
+        <span class="event-name">Your Event Name</span>
+      </section>
+      <section class="winner" hidden>
+        <strong class="winner-name">Player 1</strong>
+        <span class="winner-label">WINNER</span>
+      </section>
+      <section class="notice" hidden>
+        <strong class="notice-label">SUSPENDED</strong>
+      </section>
+      <section class="teams">
+        <table class="score-table">
+          <colgroup>
+            <col class="serve-col">
+            <col class="logo-col">
+            <col class="name-col">
+            <col class="sets-col">
+            <col class="games-col">
+            <col class="points-col">
+          </colgroup>
+          <thead>
+            <tr class="score-headings">
+              <th></th>
+              <th></th>
+              <th></th>
+              <th>SETS</th>
+              <th>GAMES</th>
+              <th>PTS</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="team team-a">
+              <td class="serve-cell"><span class="server-dot"></span></td>
+              <td class="logo-cell"><img class="team-logo" alt="" hidden></td>
+              <td class="name">Player 1</td>
+              <td class="sets">0</td>
+              <td class="games">0</td>
+              <td class="game">0</td>
+            </tr>
+            <tr class="team team-b">
+              <td class="serve-cell"><span class="server-dot"></span></td>
+              <td class="logo-cell"><img class="team-logo" alt="" hidden></td>
+              <td class="name">Player 2</td>
+              <td class="sets">0</td>
+              <td class="games">0</td>
+              <td class="game">0</td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+      <section class="terms" hidden></section>
+    </main>
+    <script src="./scoreboard.js"></script>
+  </body>
+</html>

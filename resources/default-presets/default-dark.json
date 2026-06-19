@@ -1,0 +1,16 @@
+{
+  "id": "default-dark",
+  "name": "Default Dark",
+  "theme": {
+    "primaryColor": "#111827",
+    "secondaryColor": "#1F2937",
+    "accentColor": "#F59E0B",
+    "eventLogoTintColor": "",
+    "textColor": "#FFFFFF",
+    "mutedTextColor": "#D1D5DB",
+    "teamAColor": "#2563EB",
+    "teamBColor": "#DC2626",
+    "backgroundOpacity": 0.85,
+    "borderRadius": 12
+  }
+}

@@ -1,0 +1,226 @@
+:root {
+  font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  color: #111827;
+  background: #f4f7fb;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+main {
+  display: grid;
+  gap: 14px;
+  width: min(720px, calc(100vw - 28px));
+  margin: 12px auto;
+}
+
+section {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid #d7dde8;
+  border-radius: 8px;
+  background: #ffffff;
+}
+
+.setup {
+  grid-template-columns: 1fr 140px;
+  overflow: hidden;
+}
+
+.doubles-only[hidden] {
+  display: none;
+}
+
+.setup input,
+.setup select {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  padding: 0 10px;
+  border: 1px solid #c9d2df;
+  border-radius: 6px;
+  font: inherit;
+}
+
+.setup button {
+  grid-column: span 2;
+}
+
+.format {
+  display: grid;
+  grid-column: span 2;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.players {
+  display: grid;
+  grid-column: span 2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.format label,
+.colors {
+  display: grid;
+}
+
+.format label {
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.wide-field {
+  grid-column: span 2;
+}
+
+.colors {
+  grid-column: span 2;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+}
+
+.colors label {
+  display: grid;
+  gap: 5px;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.colors input {
+  width: 100%;
+  min-width: 0;
+  min-height: 38px;
+  padding: 2px;
+}
+
+.tint-control {
+  display: grid;
+  grid-template-columns: 24px 1fr;
+  gap: 6px;
+  align-items: center;
+}
+
+.tint-control input[type="checkbox"] {
+  width: 18px;
+  min-height: 18px;
+}
+
+.opacity-control {
+  display: grid;
+  grid-column: span 2;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.opacity-control span {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.opacity-control input {
+  width: 100%;
+  min-width: 0;
+}
+
+.score {
+  grid-template-columns: 1fr 1fr;
+}
+
+.score article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 74px;
+  gap: 8px;
+  align-items: center;
+}
+
+.score span {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 18px;
+  font-weight: 800;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.score strong {
+  text-align: right;
+  font-size: 28px;
+}
+
+.actions {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.custom-notice {
+  display: grid;
+  grid-column: span 4;
+  grid-template-columns: minmax(0, 1fr) 120px;
+  gap: 8px;
+}
+
+.custom-notice input {
+  min-height: 44px;
+  padding: 0 10px;
+  border: 1px solid #c9d2df;
+  border-radius: 6px;
+  font: inherit;
+}
+
+button {
+  min-height: 44px;
+  border: 0;
+  border-radius: 6px;
+  background: #111827;
+  color: #ffffff;
+  font: inherit;
+  font-weight: 800;
+}
+
+button:active {
+  transform: translateY(1px);
+}
+
+@media (max-width: 560px) {
+  .setup,
+  .score,
+  .actions {
+    grid-template-columns: 1fr;
+  }
+
+  .setup button {
+    grid-column: span 1;
+  }
+
+  .colors {
+    grid-column: span 1;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .format,
+  .players {
+    grid-column: span 1;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .opacity-control {
+    grid-column: span 1;
+  }
+
+  .custom-notice {
+    grid-column: span 1;
+    grid-template-columns: 1fr;
+  }
+}
