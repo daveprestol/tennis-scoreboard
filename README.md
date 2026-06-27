@@ -26,7 +26,13 @@ The plugin adds a small OBS dock that starts a local server. Operators control t
 
 ## User Installation
 
-Users do not need Xcode if they download a compiled GitHub Release ZIP containing:
+Users do not need Xcode if they download the compiled GitHub Release ZIP:
+
+```text
+tennis-scoreboard.plugin.zip
+```
+
+After unzipping it, copy this bundle into OBS's plugins folder:
 
 ```text
 tennis-scoreboard.plugin

@@ -245,6 +245,28 @@ It also:
 
 Restart OBS Studio after installation.
 
+## Install From GitHub Release
+
+For users who do not want to build from source, download this Release asset:
+
+```text
+tennis-scoreboard.plugin.zip
+```
+
+Unzip it and copy the resulting bundle:
+
+```text
+tennis-scoreboard.plugin
+```
+
+to:
+
+```text
+~/Library/Application Support/obs-studio/plugins/
+```
+
+Do not use GitHub's auto-generated `Source code` ZIP for installation. The source ZIP contains code only; it does not contain the compiled `.plugin` bundle.
+
 ## Verify the Plugin Signature
 
 ```sh

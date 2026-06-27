@@ -26,7 +26,11 @@ Not currently supported/tested:
 
 ## What You Download From GitHub
 
-For a user install, download the release ZIP from GitHub Releases.
+For a user install, download this release ZIP from GitHub Releases:
+
+```text
+tennis-scoreboard.plugin.zip
+```
 
 The ZIP should contain:
 
@@ -34,13 +38,15 @@ The ZIP should contain:
 tennis-scoreboard.plugin
 ```
 
-Recommended release asset name:
+Do not download the source code ZIP if you only want to install the plugin. The source code ZIP does not contain a compiled `.plugin` bundle.
+
+Older release asset name:
 
 ```text
 tennis-scoreboard-macos-arm64-v1.0.0.zip
 ```
 
-Do not download the source code ZIP if you only want to install the plugin. Download the compiled release ZIP that contains the `.plugin` bundle.
+That ZIP also contains the plugin, but `tennis-scoreboard.plugin.zip` is the clearer installer download.
 
 ## Install Manually
 
@@ -49,7 +55,7 @@ Do not download the source code ZIP if you only want to install the plugin. Down
 2. Download and unzip:
 
 ```text
-tennis-scoreboard-macos-arm64-v1.0.0.zip
+tennis-scoreboard.plugin.zip
 ```
 
 3. Open Finder.
@@ -68,7 +74,7 @@ Go > Go to Folder...
 
 6. If the `plugins` folder does not exist, create it.
 
-7. Copy this file into that folder:
+7. Copy this folder/bundle into that folder:
 
 ```text
 tennis-scoreboard.plugin
