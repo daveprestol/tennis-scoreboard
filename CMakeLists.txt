@@ -60,6 +60,7 @@ target_sources(
 target_include_directories(${CMAKE_PROJECT_NAME} PRIVATE src)
 
 file(GLOB_RECURSE PLUGIN_RESOURCE_FILES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/resources/*")
+list(FILTER PLUGIN_RESOURCE_FILES EXCLUDE REGEX "[.]DS_Store$")
 foreach(resource_file IN LISTS PLUGIN_RESOURCE_FILES)
   cmake_path(
     RELATIVE_PATH
@@ -73,4 +74,52 @@ foreach(resource_file IN LISTS PLUGIN_RESOURCE_FILES)
   source_group("Resources/${resource_parent_path}" FILES "${resource_file}")
 endforeach()
 
+# macOS embeds these files in the plugin bundle. Windows and Linux need an
+# explicit data-directory install so obs_get_module_data_path can find them.
+if(OS_WINDOWS)
+  install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/resources/" DESTINATION "${CMAKE_PROJECT_NAME}/data")
+elseif(OS_LINUX)
+  install(
+    DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/resources/"
+    DESTINATION "${CMAKE_INSTALL_DATAROOTDIR}/obs/obs-plugins/${CMAKE_PROJECT_NAME}"
+  )
+endif()
+
 set_target_properties_plugin(${CMAKE_PROJECT_NAME} PROPERTIES OUTPUT_NAME ${_name})
+
+include(CTest)
+if(BUILD_TESTING)
+  add_executable(
+    ${CMAKE_PROJECT_NAME}-tests
+    tests/tennis-rules-tests.cpp
+    src/core/MatchState.cpp
+    src/core/TennisRules.cpp
+  )
+  target_include_directories(${CMAKE_PROJECT_NAME}-tests PRIVATE src)
+  add_test(NAME tennis-rules COMMAND ${CMAKE_PROJECT_NAME}-tests)
+
+  if(ENABLE_QT)
+    add_executable(
+      ${CMAKE_PROJECT_NAME}-server-tests
+      tests/overlay-http-server-tests.cpp
+      src/overlay/OverlayHttpServer.cpp
+    )
+    target_include_directories(${CMAKE_PROJECT_NAME}-server-tests PRIVATE src)
+    target_link_libraries(${CMAKE_PROJECT_NAME}-server-tests PRIVATE Qt6::Core Qt6::Network)
+    target_compile_definitions(
+      ${CMAKE_PROJECT_NAME}-server-tests
+      PRIVATE TEST_RESOURCE_PATH="${CMAKE_CURRENT_SOURCE_DIR}/resources"
+    )
+    add_test(NAME overlay-http-server COMMAND ${CMAKE_PROJECT_NAME}-server-tests)
+    if(APPLE AND Qt6_DIR)
+      get_filename_component(QT_RUNTIME_DIR "${Qt6_DIR}" DIRECTORY)
+      get_filename_component(QT_RUNTIME_DIR "${QT_RUNTIME_DIR}" DIRECTORY)
+      target_link_options(${CMAKE_PROJECT_NAME}-server-tests PRIVATE "-Wl,-rpath,${QT_RUNTIME_DIR}")
+      set_target_properties(
+        ${CMAKE_PROJECT_NAME}-server-tests
+        PROPERTIES XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED NO XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED NO
+      )
+      set_tests_properties(overlay-http-server PROPERTIES ENVIRONMENT "DYLD_FRAMEWORK_PATH=${QT_RUNTIME_DIR}")
+    endif()
+  endif()
+endif()

@@ -104,6 +104,43 @@ package() {
     return 2
   }
 
+  local plugin_bundle=${project_root}/release/${config}/${product_name}.plugin
+  local plugin_binary=${plugin_bundle}/Contents/MacOS/${product_name}
+  local -a required_resources=(
+    overlay/index.html
+    overlay/config.html
+    overlay/config.css
+    overlay/config.js
+    overlay/scoreboard.css
+    overlay/scoreboard.js
+  )
+
+  if [[ ! -f ${plugin_binary} ]] {
+    log_error "Plugin binary not found: ${plugin_binary}"
+    return 2
+  }
+
+  local architectures="$(lipo -archs ${plugin_binary})"
+  if [[ ${architectures} != *arm64* || ${architectures} != *x86_64* ]] {
+    log_error "macOS release must be universal; found architectures: ${architectures}"
+    return 2
+  }
+
+  local resource
+  for resource (${required_resources}) {
+    if [[ ! -f ${plugin_bundle}/Contents/Resources/${resource} ]] {
+      log_error "Required plugin resource not found: ${resource}"
+      return 2
+    }
+  }
+
+  log_group "Archiving universal ${product_name} plugin..."
+  rm -f ${project_root}/release/${output_name}.zip
+  pushd ${project_root}/release/${config}
+  ditto -c -k --keepParent ${product_name}.plugin ${project_root}/release/${output_name}.zip
+  popd
+  log_group
+
   if (( package )) {
     if [[ ! -f ${project_root}/release/${config}/${product_name}.pkg ]] {
       log_error 'Installer Package not found. Run the build script or the CMake build and install procedures first.'

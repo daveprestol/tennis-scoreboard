@@ -48,6 +48,22 @@ function Package {
     $ProductVersion = $BuildSpec.version
 
     $OutputName = "${ProductName}-${ProductVersion}-windows-${Target}"
+    $PackageRoot = "${ProjectRoot}/release/${Configuration}/${ProductName}"
+    $RequiredPaths = @(
+        "${PackageRoot}/bin/64bit/${ProductName}.dll",
+        "${PackageRoot}/data/overlay/index.html",
+        "${PackageRoot}/data/overlay/config.html",
+        "${PackageRoot}/data/overlay/config.css",
+        "${PackageRoot}/data/overlay/config.js",
+        "${PackageRoot}/data/overlay/scoreboard.css",
+        "${PackageRoot}/data/overlay/scoreboard.js"
+    )
+
+    foreach ( $RequiredPath in $RequiredPaths ) {
+        if ( !(Test-Path -Path $RequiredPath -PathType Leaf) ) {
+            throw "Required package file is missing: ${RequiredPath}"
+        }
+    }
 
     $RemoveArgs = @{
         ErrorAction = 'SilentlyContinue'

@@ -2,7 +2,7 @@
 
 ## Overview
 
-The plugin is a native OBS Studio module for macOS. It registers a small Qt dock, starts two local HTTP servers, and serves a browser-based control panel plus a browser-source scoreboard overlay.
+The plugin is a native OBS Studio module with macOS, Windows, and Linux build targets. It registers a small Qt dock, starts two local HTTP servers, and serves a browser-based control panel plus a browser-source scoreboard overlay.
 
 ```text
 OBS Studio
@@ -59,6 +59,10 @@ The template's build scripts fetch matching OBS, Qt6, and prebuilt dependencies 
 
 ## Distribution Notes
 
+The macOS release is a universal bundle containing both `arm64` and `x86_64`. Windows and Linux require separate native packages because the operating systems use different executable formats.
+
+Release packaging validates that all overlay resources are present. The macOS package additionally fails unless both processor architectures are present.
+
 For open source distribution without Apple Developer notarization, publish a GitHub Release ZIP containing the compiled `tennis-scoreboard.plugin` bundle and direct users to `instructions.md`.
 
 For frictionless public macOS distribution, create a signed and notarized `.pkg` using Apple Developer certificates.
@@ -66,6 +70,6 @@ For frictionless public macOS distribution, create a signed and notarized `.pkg`
 ## Future Improvements
 
 1. Persist match setup and visual settings between OBS sessions.
-2. Add packaged release automation for GitHub Releases.
-3. Add universal macOS builds if Intel Mac support is required.
+2. Add authenticated remote-control access for untrusted networks.
+3. Add runtime smoke tests that launch OBS on every supported platform.
 4. Add signed/notarized macOS installer support for professional distribution.

@@ -38,8 +38,8 @@
     },
     "name": "tennis-scoreboard",
     "displayName": "Tennis Scoreboard",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "author": "OBS Tennis",
-    "website": "https://example.com",
-    "email": "support@example.com"
+    "website": "https://github.com/daveprestol/tennis-scoreboard",
+    "email": ""
 }

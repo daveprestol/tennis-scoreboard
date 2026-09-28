@@ -144,7 +144,7 @@ http://127.0.0.1:19876/score
 | `tests/tennis-rules-tests.cpp` | Pure C++ smoke tests for scoring and score terms. |
 | `scripts/install-local-macos.sh` | Builds, copies, clears quarantine attributes, and locally signs the plugin for OBS. |
 | `buildspec.json` | OBS Plugin Template dependency versions. |
-| `CMakePresets.json` | Build presets for macOS, Windows, and Linux. The tested 1.0 target is macOS arm64. |
+| `CMakePresets.json` | Build presets for universal macOS, Windows x64, and Ubuntu x86_64. |
 
 ## Languages and Tools
 
@@ -166,11 +166,12 @@ http://127.0.0.1:19876/score
 
 ## Requirements
 
-The current tested target is macOS Apple Silicon.
+The primary tested target is macOS. Version 1.0.1 produces one universal bundle for Apple Silicon and Intel.
 
 Required:
 
 - macOS 12.0 or newer.
+- Apple Silicon or Intel processor.
 - OBS Studio.
 
 For installing a compiled release ZIP, users do not need Xcode.
@@ -250,7 +251,7 @@ Restart OBS Studio after installation.
 For users who do not want to build from source, download this Release asset:
 
 ```text
-tennis-scoreboard.plugin.zip
+tennis-scoreboard-1.0.1-macos-universal.zip
 ```
 
 Unzip it and copy the resulting bundle:
@@ -434,11 +435,11 @@ Restart OBS and refresh the Browser Source cache.
 
 ## Current Limitations
 
-- The 1.0 build was tested on macOS Apple Silicon.
+- Version 1.0.1 is a universal macOS build for Apple Silicon and Intel and was load-tested in OBS 32 on Apple Silicon.
 - The plugin is locally signed for development/testing, not notarized for public macOS distribution.
 - Match setup and visual settings are not persisted as a formal saved profile yet.
 - Logo tint depends on CSS mask support and the image source.
-- Windows/Linux presets exist from the OBS Plugin Template, but this 1.0 process focused on macOS.
+- Windows x64 and Ubuntu x86_64 packages are built automatically, but still require broader runtime testing on physical machines.
 
 ## License
 

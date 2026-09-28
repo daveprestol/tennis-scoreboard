@@ -1,6 +1,6 @@
-# Tennis Scoreboard OBS Plugin - Proceso hasta la version 1.0
+# Tennis Scoreboard OBS Plugin - Proceso hasta la version 1.0.1
 
-Este documento resume el camino tecnico seguido para convertir la idea inicial en una version 1.0 funcional del plugin `tennis-scoreboard` para OBS Studio en macOS.
+Este documento resume el camino tecnico seguido para convertir la idea inicial en una version 1.0 funcional y luego preparar la version 1.0.1 para distribucion universal en macOS.
 
 ## Objetivo inicial
 
@@ -17,13 +17,13 @@ Crear un plugin nativo para OBS en macOS que permitiera manejar una pizarra de t
 
 ### Instaladas/configuradas localmente
 
-- Xcode 26.5, build `17F42`.
+- Xcode 26.5 durante la version 1.0 y Xcode 27.0 durante la validacion de 1.0.1.
 - Homebrew 6.0.2.
 - CMake 4.3.3, instalado/confirmado via Homebrew.
 - Git 2.53.0, instalado/confirmado via Homebrew.
 - Ninja 1.13.2, instalado/confirmado via Homebrew.
 
-El script local de instalacion usa Xcode como generador de CMake para macOS. El preset actual esta orientado a Apple Silicon:
+El script local de instalacion usa Xcode como generador de CMake para macOS. Desde 1.0.1, el preset produce un binario universal para Apple Silicon e Intel:
 
 ```sh
 cmake --preset macos
@@ -372,10 +372,18 @@ La version 1.0 queda lista para uso local en OBS Studio en macOS Apple Silicon:
 - Otro dispositivo en la misma red puede abrir `/config` usando la IP local del Mac.
 - El usuario final puede instalar un ZIP compilado sin Xcode, copiando `tennis-scoreboard.plugin` al folder de plugins de OBS y ejecutando `xattr`/`codesign` si macOS lo bloquea.
 
+## Cambios de distribucion en la version 1.0.1
+
+- El bundle macOS contiene simultaneamente `arm64` y `x86_64`.
+- El ZIP publicado se llama `tennis-scoreboard-1.0.1-macos-universal.zip`.
+- El workflow rechaza un paquete si falta una arquitectura o un recurso HTML/CSS/JS.
+- Los tags con y sin prefijo `v` son aceptados por la automatizacion de releases.
+- Windows x64 y Ubuntu x86_64 generan paquetes nativos separados.
+- El plugin universal fue cargado correctamente en OBS 32 sobre Apple Silicon.
+
 ## Limitaciones conocidas para futuras versiones
 
 - El plugin todavia no tiene instalador firmado/notarizado para distribuir publicamente en macOS.
 - No hay persistencia formal en disco para sesiones/presets entre reinicios.
 - El tint de logo depende del comportamiento CSS mask del browser y del tipo/origen del asset.
-- El preset de CMake actual esta orientado a macOS Apple Silicon (`arm64`).
-- Windows/Linux existen en el template, pero la version trabajada y probada aqui fue macOS.
+- Windows y Ubuntu necesitan pruebas adicionales en maquinas fisicas aunque sus builds automaticos sean correctos.

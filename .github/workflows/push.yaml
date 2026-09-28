@@ -42,15 +42,17 @@ jobs:
           shopt -s extglob
 
           case "${GITHUB_REF_NAME}" in
-            +([0-9]).+([0-9]).+([0-9]) )
+            ?(v)+([0-9]).+([0-9]).+([0-9]) )
               echo 'validTag=true' >> $GITHUB_OUTPUT
               echo 'prerelease=false' >> $GITHUB_OUTPUT
-              echo "version=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
+              echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+              echo "tag=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
               ;;
-            +([0-9]).+([0-9]).+([0-9])-@(beta|rc)*([0-9]) )
+            ?(v)+([0-9]).+([0-9]).+([0-9])-@(beta|rc)*([0-9]) )
               echo 'validTag=true' >> $GITHUB_OUTPUT
               echo 'prerelease=true' >> $GITHUB_OUTPUT
-              echo "version=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
+              echo "version=${GITHUB_REF_NAME#v}" >> $GITHUB_OUTPUT
+              echo "tag=${GITHUB_REF_NAME}" >> $GITHUB_OUTPUT
               ;;
             *) echo 'validTag=false' >> $GITHUB_OUTPUT ;;
           esac
@@ -73,7 +75,7 @@ jobs:
 
           variants=(
             'windows-x64;zip|exe'
-            'macos-universal;tar.xz|pkg'
+            'macos-universal;zip|tar.xz|pkg'
             'ubuntu-24.04-x86_64;tar.xz|deb|ddeb'
             'sources;tar.xz'
           )
@@ -107,7 +109,7 @@ jobs:
         with:
           draft: true
           prerelease: ${{ fromJSON(steps.check.outputs.prerelease) }}
-          tag_name: ${{ steps.check.outputs.version }}
+          tag_name: ${{ steps.check.outputs.tag }}
           name: ${{ needs.build-project.outputs.pluginName }} ${{ steps.check.outputs.version }}
           body_path: ${{ github.workspace }}/CHECKSUMS.txt
           files: |

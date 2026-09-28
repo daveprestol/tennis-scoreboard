@@ -8,20 +8,19 @@ Users installing a compiled release ZIP do not need Xcode. Xcode is only require
 
 ## Compatibility
 
-Current 1.0 compatibility:
+Current 1.0.1 compatibility:
 
 - macOS 12.0 or newer.
-- Apple Silicon Macs: M1, M2, M3, M4, or newer.
-- OBS Studio 31.x recommended.
+- Apple Silicon (`arm64`) and Intel (`x86_64`) Macs.
+- OBS Studio 31 and 32.
 - Built against OBS Studio dependency target `31.1.1`.
-- Tested on macOS using the OBS native plugin format.
+- Built as a universal macOS plugin and tested in OBS 32 on Apple Silicon.
 - Supports tennis scoring and padel/no-ad style golden point scoring.
 
 Not currently supported/tested:
 
-- Intel Macs, unless a separate `x86_64` or universal build is produced.
-- Windows.
-- Linux.
+- Windows ARM64.
+- Linux ARM64 and Linux distributions other than the published Ubuntu target.
 - Automatic notarized `.pkg` installation.
 
 ## What You Download From GitHub
@@ -29,7 +28,7 @@ Not currently supported/tested:
 For a user install, download this release ZIP from GitHub Releases:
 
 ```text
-tennis-scoreboard.plugin.zip
+tennis-scoreboard-1.0.1-macos-universal.zip
 ```
 
 The ZIP should contain:
@@ -40,13 +39,13 @@ tennis-scoreboard.plugin
 
 Do not download the source code ZIP if you only want to install the plugin. The source code ZIP does not contain a compiled `.plugin` bundle.
 
-Older release asset name:
+Do not use these older Apple-Silicon-only assets on an Intel Mac:
 
 ```text
 tennis-scoreboard-macos-arm64-v1.0.0.zip
 ```
 
-That ZIP also contains the plugin, but `tennis-scoreboard.plugin.zip` is the clearer installer download.
+The 1.0.1 universal ZIP replaces both older 1.0.0 downloads.
 
 ## Install Manually
 
@@ -55,7 +54,7 @@ That ZIP also contains the plugin, but `tennis-scoreboard.plugin.zip` is the cle
 2. Download and unzip:
 
 ```text
-tennis-scoreboard.plugin.zip
+tennis-scoreboard-1.0.1-macos-universal.zip
 ```
 
 3. Open Finder.

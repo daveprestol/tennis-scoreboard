@@ -147,6 +147,23 @@ ${_usage_host:-}"
   read -r product_name product_version <<< \
     "$(jq -r '. | {name, version} | join(" ")' ${buildspec_file})"
 
+  local resource_root=${project_root}/release/${config}/share/obs/obs-plugins/${product_name}/overlay
+  local -a required_resources=(
+    index.html
+    config.html
+    config.css
+    config.js
+    scoreboard.css
+    scoreboard.js
+  )
+  local resource
+  for resource (${required_resources}) {
+    if [[ ! -f ${resource_root}/${resource} ]] {
+      log_error "Required plugin resource not found: ${resource_root}/${resource}"
+      return 2
+    }
+  }
+
   local -a cmake_args=()
   if (( _loglevel > 1 )) cmake_args+=(--verbose)
 
