@@ -29,7 +29,7 @@ The plugin adds a small OBS dock that starts a local server. Operators control t
 Users do not need Xcode if they download the compiled macOS release:
 
 ```text
-tennis-scoreboard-1.0.1-macos-universal.zip
+tennis-scoreboard-1.0.2-macos-universal.zip
 ```
 
 After unzipping it, copy this bundle into OBS's plugins folder:

@@ -122,7 +122,7 @@ void OverlayHttpServer::handleRequest(QTcpSocket *socket, bool configServer)
 		sendFile(socket, "overlay/config.js", "application/javascript; charset=utf-8");
 	} else if (path == "/state.json") {
 		sendResponse(socket, 200, "application/json; charset=utf-8", stateJson_);
-	} else if (configServer && path == "/api/action") {
+	} else if (path == "/api/action") {
 		handleAction(socket, url, request);
 	} else {
 		sendResponse(socket, 404, "text/plain; charset=utf-8", "Not found");

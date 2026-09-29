@@ -251,7 +251,7 @@ Restart OBS Studio after installation.
 For users who do not want to build from source, download this Release asset:
 
 ```text
-tennis-scoreboard-1.0.1-macos-universal.zip
+tennis-scoreboard-1.0.2-macos-universal.zip
 ```
 
 Unzip it and copy the resulting bundle:

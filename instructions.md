@@ -8,7 +8,7 @@ Users installing a compiled release ZIP do not need Xcode. Xcode is only require
 
 ## Compatibility
 
-Current 1.0.1 compatibility:
+Current 1.0.2 compatibility:
 
 - macOS 12.0 or newer.
 - Apple Silicon (`arm64`) and Intel (`x86_64`) Macs.
@@ -28,7 +28,7 @@ Not currently supported/tested:
 For a user install, download this release ZIP from GitHub Releases:
 
 ```text
-tennis-scoreboard-1.0.1-macos-universal.zip
+tennis-scoreboard-1.0.2-macos-universal.zip
 ```
 
 The ZIP should contain:
@@ -54,7 +54,7 @@ The 1.0.1 universal ZIP replaces both older 1.0.0 downloads.
 2. Download and unzip:
 
 ```text
-tennis-scoreboard-1.0.1-macos-universal.zip
+tennis-scoreboard-1.0.2-macos-universal.zip
 ```
 
 3. Open Finder.

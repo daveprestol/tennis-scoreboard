@@ -38,7 +38,7 @@
     },
     "name": "tennis-scoreboard",
     "displayName": "Tennis Scoreboard",
-    "version": "1.0.1",
+    "version": "1.0.2",
     "author": "OBS Tennis",
     "website": "https://github.com/daveprestol/tennis-scoreboard",
     "email": "maintainer@tennis-scoreboard.invalid"
